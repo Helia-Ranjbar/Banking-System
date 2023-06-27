@@ -9,12 +9,11 @@ class Loan
 {
     double amount, return_amount, loan_code;
     string national_code  ;
-    bool is_paid= false;
-    time_t start_time;
+    time_t start_year, start_month, start_day;
 
 public:
-    Loan(double a, double r, double l , string na , time_t s)
-    : amount(a), return_amount(r), loan_code(l), national_code(na), start_time(s) {} 
+    /*Loan(double a, double r, double l , string na , time_t s)
+    : amount(a), return_amount(r), loan_code(l), national_code(na), start_time(s) {} */
 
     Loan(){}
 
@@ -22,42 +21,48 @@ public:
     {
         ofstream file;
         file.open("loan.csv",ios::app);
-
+        
+        string c=",", b=".", d=":";
+        
+        cout<<"*****************************\n";
+        cout<<"Enter your national code: ";
         getline(cin,national_code);
-        national_code= national_code+',';
-
+        
         srand(time(NULL));
         loan_code=rand();
         
-
+        cout<<"Enter the loan amount you want: ";
         cin>>amount;
 
-        start_time = time(0);
-        char* dt = ctime(&start_time);
+        start_year = time(nullptr);
+        tm* local_time1 = localtime(&start_year);
+        start_year=1900 + local_time1->tm_year;
+
+        start_month = time(nullptr);
+        tm* local_time2 = localtime(&start_month);
+        start_month=local_time2->tm_mon+1;
+
+        start_day = time(nullptr);
+        tm* local_time3 = localtime(&start_day);
+        start_day=local_time3->tm_mday;
 
         return_amount=amount*1.2;
 
-        string c=",";
+        file<<national_code<<c<<loan_code<<c<<amount<<c<<return_amount<<c<<start_year<<b<<start_month<<b<<start_day<<endl;
 
-        file<<national_code<<loan_code<<c<<amount<<c<<return_amount<<c<<dt;
+        file.close();  
+        cout<<"*****************************\n";
+        cout<<"Your request has been registered."<<endl;   
+        cout<<"*****************************\n"; 
+    }
 
-        file.close();      
-    }
-    void paid()
-    {
-        is_paid=true;
-    }
 };
 
 int main()
 {
-    //Loan a;
-   // a.add();
-        time_t start_time = time(0);
-        char* dt = ctime(&start_time);
-        char a='5';
-        if(*dt!=a)
-            cout<<"no";
+    Loan a;
+    a.add();
+
 
 
 }

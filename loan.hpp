@@ -52,17 +52,5 @@ public:
     }
 };
 
-int main()
-{
-    //Loan a;
-   // a.add();
-        time_t start_time = time(0);
-        char* dt = ctime(&start_time);
-        char a='5';
-        if(*dt!=a)
-            cout<<"no";
-
-
-}
 
 #endif
